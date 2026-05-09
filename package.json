@@ -1,4 +1,14 @@
 {
+  "name": "despliegue-ubikasa",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "",
+  "type": "module",
+  "main": "",
+  "scripts": {
+    "format": "prettier --write ."
+  },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^8.59.2",
     "@typescript-eslint/parser": "^8.59.2",

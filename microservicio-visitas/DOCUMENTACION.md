@@ -62,8 +62,8 @@ npm run dev
 | `DB_HOST`     | Host de MySQL                | `localhost`       |
 | `DB_PORT`     | Puerto de MySQL              | `3306`            |
 | `DB_USER`     | Usuario de MySQL             | `root`            |
-| `DB_PASSWORD` | Contraseña de MySQL          | (vacío)           |
-| `DB_NAME`     | Nombre de la base de datos   | `ubikasa_visitas` |
+| `DB_PASSWORD` | Contraseña de MySQL          | `root`              |
+| `DB_NAME`     | Nombre de la base de datos   | `ubikasa-visitas`   |
 
 ## Endpoints
 

@@ -1,0 +1,119 @@
+{
+  "info": {
+    "name": "Ubikasa - Microservicio Visitas",
+    "description": "Colección de requests para el microservicio de visitas de la plataforma Ubikasa",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "BASE_URL",
+      "value": "http://localhost:3003"
+    }
+  ],
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "url": "{{BASE_URL}}/health"
+      }
+    },
+    {
+      "name": "Obtener todas las visitas",
+      "request": {
+        "method": "GET",
+        "url": "{{BASE_URL}}/visitas"
+      }
+    },
+    {
+      "name": "Obtener visita por ID",
+      "request": {
+        "method": "GET",
+        "url": "{{BASE_URL}}/visitas/1"
+      }
+    },
+    {
+      "name": "Obtener visitas por propiedad",
+      "request": {
+        "method": "GET",
+        "url": "{{BASE_URL}}/visitas/propiedad/1"
+      }
+    },
+    {
+      "name": "Obtener horarios disponibles",
+      "request": {
+        "method": "GET",
+        "url": "{{BASE_URL}}/visitas/propiedad/1/disponibles"
+      }
+    },
+    {
+      "name": "Obtener visitas de un visitante",
+      "request": {
+        "method": "GET",
+        "url": "{{BASE_URL}}/visitas/visitante/5"
+      }
+    },
+    {
+      "name": "Obtener visitas de un arrendador",
+      "request": {
+        "method": "GET",
+        "url": "{{BASE_URL}}/visitas/arrendador/1"
+      }
+    },
+    {
+      "name": "Crear cupo de visita",
+      "request": {
+        "method": "POST",
+        "url": "{{BASE_URL}}/visitas",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"propiedadId\": 1,\n  \"arrendadorId\": 1,\n  \"fecha\": \"2026-06-15\",\n  \"hora\": \"10:00\"\n}"
+        }
+      }
+    },
+    {
+      "name": "Agendar visita",
+      "request": {
+        "method": "PATCH",
+        "url": "{{BASE_URL}}/visitas/1/agendar",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"visitanteId\": 5\n}"
+        }
+      }
+    },
+    {
+      "name": "Cancelar reserva",
+      "request": {
+        "method": "PATCH",
+        "url": "{{BASE_URL}}/visitas/1/cancelar"
+      }
+    },
+    {
+      "name": "Completar visita",
+      "request": {
+        "method": "PATCH",
+        "url": "{{BASE_URL}}/visitas/1/completar"
+      }
+    },
+    {
+      "name": "Eliminar visita",
+      "request": {
+        "method": "DELETE",
+        "url": "{{BASE_URL}}/visitas/1"
+      }
+    }
+  ]
+}

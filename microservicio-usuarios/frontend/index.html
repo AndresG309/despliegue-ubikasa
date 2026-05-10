@@ -11,17 +11,29 @@
       <h1>🔐 Ubikasa - Usuarios API</h1>
 
       <div class="tabs">
-        <button class="tab-btn active" onclick="switchTab('crear')">Crear Usuario</button>
+        <button class="tab-btn active" onclick="switchTab('health')">Health Check</button>
+        <button class="tab-btn" onclick="switchTab('crear')">Crear Usuario</button>
         <button class="tab-btn" onclick="switchTab('obtener')">Obtener Usuario</button>
         <button class="tab-btn" onclick="switchTab('actualizar')">Actualizar</button>
         <button class="tab-btn" onclick="switchTab('login')">Login</button>
         <button class="tab-btn" onclick="switchTab('eliminar')">Eliminar</button>
-        <button class="tab-btn" onclick="switchTab('health')">Health Check</button>
       </div>
 
       <div class="content">
+        <!-- HEALTH CHECK -->
+        <div id="health" class="tab-content active">
+          <div class="form-section">
+            <h2>Health Check</h2>
+            <form onsubmit="healthCheck(event)">
+              <div class="form-group" style="color: #666; margin-bottom: 20px">
+                Verifica el estado del microservicio
+              </div>
+              <button type="submit">Verificar Estado</button>
+            </form>
+          </div>
+        </div>
         <!-- CREAR USUARIO -->
-        <div id="crear" class="tab-content active">
+        <div id="crear" class="tab-content">
           <div class="form-section">
             <h2>Crear Nuevo Usuario</h2>
             <form onsubmit="crearUsuario(event)">
@@ -145,19 +157,6 @@
                 ⚠️ Esta acción es irreversible
               </div>
               <button type="submit" style="background: #dc3545">Eliminar Usuario</button>
-            </form>
-          </div>
-        </div>
-
-        <!-- HEALTH CHECK -->
-        <div id="health" class="tab-content">
-          <div class="form-section">
-            <h2>Health Check</h2>
-            <form onsubmit="healthCheck(event)">
-              <div class="form-group" style="color: #666; margin-bottom: 20px">
-                Verifica el estado del microservicio
-              </div>
-              <button type="submit">Verificar Estado</button>
             </form>
           </div>
         </div>

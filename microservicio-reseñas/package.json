@@ -1,7 +1,7 @@
 {
   "name": "microservicio-resenas",
   "version": "1.0.0",
-  "description": "",
+  "description": "Microservicio de reseñas - Ubikasa",
   "license": "ISC",
   "author": "",
   "type": "module",
@@ -12,7 +12,9 @@
     "start": "node dist/server.js"
   },
   "dependencies": {
-    "express": "^5.2.1"
+    "express": "^5.2.1",
+    "mysql2": "^3.11.5",
+    "dotenv": "^16.4.7"
   },
   "devDependencies": {
     "@types/express": "^5.0.6",

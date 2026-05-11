@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Panel de gestión de visitas para la plataforma Ubikasa. Administra cupos, reservas y consultas de visitas a propiedades.">
+  <title>Ubikasa — Gestión de Visitas</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏠</text></svg>">
+</head>
+<body>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <div class="app-container">
+
+    <!-- ═══ Header ═══ -->
+    <header class="header" id="app-header">
+      <div class="header__brand">
+        <div class="header__logo">U</div>
+        <div>
+          <h1 class="header__title">Ubikasa — Gestión de Visitas</h1>
+          <p class="header__subtitle">Panel de administración del microservicio</p>
+        </div>
+      </div>
+      <button class="header__status" id="health-status" title="Click para verificar estado">
+        <span class="status-dot" id="health-dot"></span>
+        <span id="health-text">Verificando...</span>
+      </button>
+    </header>
+
+    <!-- ═══ Row 1: Create + Response Panel ═══ -->
+    <div class="grid-layout">
+
+      <!-- Crear Cupo de Visita -->
+      <section class="card" id="section-create" style="animation-delay: 0.1s">
+        <div class="card__header">
+          <h2 class="card__title">
+            <span class="card__title-icon">➕</span>
+            Crear Cupo de Visita
+          </h2>
+          <span class="card__badge">POST</span>
+        </div>
+
+        <form id="create-form" class="form-grid">
+          <div class="form-group">
+            <label class="form-label" for="create-propiedad-id">Propiedad ID</label>
+            <input class="form-input" type="number" id="create-propiedad-id" placeholder="Ej: 1" min="1" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="create-arrendador-id">Arrendador ID</label>
+            <input class="form-input" type="number" id="create-arrendador-id" placeholder="Ej: 1" min="1" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="create-fecha">Fecha</label>
+            <input class="form-input" type="date" id="create-fecha" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="create-hora">Hora</label>
+            <select class="form-input" id="create-hora" required>
+              <option value="" disabled selected>Seleccionar horario</option>
+              <option value="09:00">09:00 — 10:00</option>
+              <option value="10:00">10:00 — 11:00</option>
+              <option value="11:00">11:00 — 12:00</option>
+              <option value="12:00">12:00 — 13:00</option>
+              <option value="13:00">13:00 — 14:00</option>
+              <option value="14:00">14:00 — 15:00</option>
+              <option value="15:00">15:00 — 16:00</option>
+              <option value="16:00">16:00 — 17:00</option>
+              <option value="17:00">17:00 — 18:00</option>
+            </select>
+          </div>
+
+          <div class="form-group form-group--full">
+            <button type="submit" class="btn btn--primary btn--full" id="btn-create">
+              ✦ Crear Cupo
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <!-- Response Panel -->
+      <section class="card" id="section-response" style="animation-delay: 0.15s">
+        <div class="card__header">
+          <h2 class="card__title">
+            <span class="card__title-icon">📡</span>
+            Respuesta API
+          </h2>
+          <span class="card__badge">JSON</span>
+        </div>
+
+        <div class="response-panel" id="response-panel">
+          <div class="response-panel__header">
+            <span class="response-panel__method response-panel__method--get">---</span>
+            <span class="response-panel__url">Esperando petición...</span>
+            <span class="response-panel__status-code" style="opacity: 0.3">---</span>
+          </div>
+          <div class="response-panel__body">
+            <div class="empty-state" style="padding: 32px">
+              <div class="empty-state__icon">📨</div>
+              <div class="empty-state__text">Realiza una operación para ver la respuesta</div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ═══ Row 2: Consultas / Filtros ═══ -->
+    <section class="card grid-layout--full" id="section-filters" style="animation-delay: 0.2s">
+      <div class="card__header">
+        <h2 class="card__title">
+          <span class="card__title-icon">🔍</span>
+          Consultas y Filtros
+        </h2>
+        <button class="btn btn--secondary btn--sm" onclick="clearFilterResults()" id="btn-clear-filters">✕ Limpiar resultados</button>
+      </div>
+
+      <div class="filters-cards-grid">
+
+        <!-- Buscar por ID -->
+        <div class="filter-card" id="filter-card-id">
+          <div class="filter-card__icon">🔎</div>
+          <div class="filter-card__title">Buscar por ID</div>
+          <div class="filter-card__desc">Encuentra una visita específica por su identificador único</div>
+          <div class="filter-card__input-row">
+            <input class="form-input" type="number" id="filter-id" placeholder="Ej: 1" min="1">
+            <button class="btn btn--primary btn--sm" onclick="filterById()" id="btn-filter-id">Buscar</button>
+          </div>
+        </div>
+
+        <!-- Visitas por Propiedad -->
+        <div class="filter-card" id="filter-card-propiedad">
+          <div class="filter-card__icon">🏠</div>
+          <div class="filter-card__title">Visitas por Propiedad</div>
+          <div class="filter-card__desc">Todas las visitas asociadas a una propiedad</div>
+          <div class="filter-card__input-row">
+            <input class="form-input" type="number" id="filter-propiedad" placeholder="Propiedad ID" min="1">
+            <button class="btn btn--primary btn--sm" onclick="filterByPropiedad()" id="btn-filter-propiedad">Consultar</button>
+          </div>
+        </div>
+
+        <!-- Horarios Disponibles -->
+        <div class="filter-card filter-card--highlight" id="filter-card-disponibles">
+          <div class="filter-card__icon">📅</div>
+          <div class="filter-card__title">Horarios Disponibles</div>
+          <div class="filter-card__desc">Cupos libres para agendar en una propiedad</div>
+          <div class="filter-card__input-row">
+            <input class="form-input" type="number" id="filter-disponibles" placeholder="Propiedad ID" min="1">
+            <button class="btn btn--success btn--sm" onclick="filterDisponibles()" id="btn-filter-disponibles">Ver libres</button>
+          </div>
+        </div>
+
+        <!-- Historial de Visitante -->
+        <div class="filter-card" id="filter-card-visitante">
+          <div class="filter-card__icon">🧑</div>
+          <div class="filter-card__title">Historial de Visitante</div>
+          <div class="filter-card__desc">Todas las visitas agendadas por un visitante</div>
+          <div class="filter-card__input-row">
+            <input class="form-input" type="number" id="filter-visitante" placeholder="Visitante ID" min="1">
+            <button class="btn btn--primary btn--sm" onclick="filterByVisitante()" id="btn-filter-visitante">Consultar</button>
+          </div>
+        </div>
+
+        <!-- Visitas de Arrendador -->
+        <div class="filter-card" id="filter-card-arrendador">
+          <div class="filter-card__icon">👤</div>
+          <div class="filter-card__title">Visitas de Arrendador</div>
+          <div class="filter-card__desc">Cupos creados por un arrendador específico</div>
+          <div class="filter-card__input-row">
+            <input class="form-input" type="number" id="filter-arrendador" placeholder="Arrendador ID" min="1">
+            <button class="btn btn--primary btn--sm" onclick="filterByArrendador()" id="btn-filter-arrendador">Consultar</button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Filter Results -->
+      <div class="results-section">
+        <div class="visitas-grid" id="filter-results"></div>
+      </div>
+    </section>
+
+    <!-- ═══ Row 3: Listado de Visitas ═══ -->
+    <section class="card" id="section-visitas" style="animation-delay: 0.25s">
+      <div class="card__header">
+        <h2 class="card__title">
+          <span class="card__title-icon">📋</span>
+          Listado de Visitas
+        </h2>
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <span class="card__badge" id="visitas-count">0 visitas</span>
+          <button class="btn btn--secondary btn--sm" id="btn-refresh">↻ Refrescar</button>
+        </div>
+      </div>
+
+      <div class="visitas-grid" id="visitas-container">
+        <div class="loading-overlay"><span class="spinner"></span> Cargando visitas...</div>
+      </div>
+    </section>
+
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,74 +1,99 @@
-import type { Request, Response } from "express";
+import type {
+  Request,
+  Response,
+} from "express";
 
 import * as PropiedadModel from "../models/propiedadesModel.js";
 
-export async function getAll(
+export const getAll = async (
   req: Request,
   res: Response
-) {
+) => {
   const propiedades =
     await PropiedadModel.getAll();
 
   res.json(propiedades);
-}
+};
 
-export async function getById(
+export const getById = async (
   req: Request,
   res: Response
-) {
-  const { id } = req.params;
-
+) => {
   const propiedad =
-    await PropiedadModel.getById(Number(id));
+    await PropiedadModel.getById(
+      Number(req.params.id)
+    );
 
   res.json(propiedad);
-}
+};
 
-export async function create(
+export const create = async (
   req: Request,
   res: Response
-) {
+) => {
   const {
     titulo,
     descripcion,
-    precio,
     direccion,
+    multimedia,
+    arrendador_id,
+    precio,
+    tiempo_visita,
   } = req.body;
 
   await PropiedadModel.create(
     titulo,
     descripcion,
+    direccion,
+    multimedia,
+    arrendador_id,
     precio,
-    direccion
+    tiempo_visita
   );
 
   res.json({
-    message: "Propiedad creada",
+    message:
+      "Propiedad creada",
   });
-}
+};
 
-export async function update(
+export const update = async (
   req: Request,
   res: Response
-) {
-  const { id } = req.params;
-
+) => {
   await PropiedadModel.update(
-    Number(id),
+    Number(req.params.id),
     req.body
   );
 
   res.json({
-    message: "Propiedad actualizada",
+    message:
+      "Propiedad actualizada",
   });
-}
+};
 
-export async function remove(req: Request, res: Response) {
-  const { id } = req.params;
-
-  await PropiedadModel.remove(Number(id));
+export const remove = async (
+  req: Request,
+  res: Response
+) => {
+  await PropiedadModel.remove(
+    Number(req.params.id)
+  );
 
   res.json({
-    message: "Propiedad eliminada",
+    message:
+      "Propiedad eliminada",
   });
-}
+};
+
+export const filtrar = async (
+  req: Request,
+  res: Response
+) => {
+  const propiedades =
+    await PropiedadModel.filtrar(
+      String(req.query.titulo)
+    );
+
+  res.json(propiedades);
+};

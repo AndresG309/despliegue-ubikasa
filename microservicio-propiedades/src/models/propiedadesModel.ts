@@ -1,70 +1,99 @@
-import connection from "../config/database.js";
+import { pool } from "../config/database.js";
 
-export async function getAll() {
-  const [rows] = await connection.query(
-    "SELECT * FROM propiedades"
-  );
-
-  return rows;
-}
-
-export async function getById(id: number) {
-  const [rows] = await connection.query(
-    "SELECT * FROM propiedades WHERE id = ?",
-    [id]
-  );
+export const getAll = async () => {
+  const [rows] =
+    await pool.query(
+      "SELECT * FROM propiedades"
+    );
 
   return rows;
-}
+};
 
-export async function create(
+export const getById = async (
+  id: number
+) => {
+  const [rows]: any =
+    await pool.query(
+      "SELECT * FROM propiedades WHERE id = ?",
+      [id]
+    );
+
+  return rows[0];
+};
+
+export const create = async (
   titulo: string,
   descripcion: string,
+  direccion: string,
+  multimedia: string,
+  arrendador_id: number,
   precio: number,
-  direccion: string
-) {
-  const [result] = await connection.query(
+  tiempo_visita: string
+) => {
+  await pool.query(
     `
     INSERT INTO propiedades
-    (titulo, descripcion, precio, direccion)
-    VALUES (?, ?, ?, ?)
-    `,
-    [titulo, descripcion, precio, direccion]
-  );
+    (
+      titulo,
+      descripcion,
+      direccion,
+      multimedia,
+      arrendador_id,
+      precio,
+      tiempo_visita
+    )
 
-  return result;
-}
-
-export async function update(
-  id: number,
-  data: any
-) {
-  const [result] = await connection.query(
-    `
-    UPDATE propiedades
-    SET titulo = ?,
-        descripcion = ?,
-        precio = ?,
-        direccion = ?
-    WHERE id = ?
+    VALUES (?, ?, ?, ?, ?, ?, ?)
     `,
     [
-      data.titulo,
-      data.descripcion,
-      data.precio,
-      data.direccion,
-      id,
+      titulo,
+      descripcion,
+      direccion,
+      multimedia,
+      arrendador_id,
+      precio,
+      tiempo_visita,
     ]
   );
+};
 
-  return result;
-}
+export const update = async (
+  id: number,
+  data: any
+) => {
+  await pool.query(
+    `
+    UPDATE propiedades
+    SET ?
+    WHERE id = ?
+    `,
+    [data, id]
+  );
+};
 
-export async function remove(id: number) {
-  const [result] = await connection.query(
-    "DELETE FROM propiedades WHERE id = ?",
+export const remove = async (
+  id: number
+) => {
+  await pool.query(
+    `
+    DELETE FROM propiedades
+    WHERE id = ?
+    `,
     [id]
   );
+};
 
-  return result;
-}
+export const filtrar = async (
+  titulo: string
+) => {
+  const [rows] =
+    await pool.query(
+      `
+      SELECT * FROM propiedades
+      WHERE titulo LIKE ?
+      `,
+      [`%${titulo}%`]
+    );
+
+  return rows;
+};

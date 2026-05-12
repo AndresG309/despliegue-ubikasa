@@ -1,5 +1,6 @@
 import express, { Express, Request, Response } from 'express';
 import cors from 'cors';
+import morgan from 'morgan';
 import usuarioRoutes from './routes/usuarioRoutes.js';
 
 const app: Express = express();
@@ -8,6 +9,7 @@ const app: Express = express();
 app.disable('x-powered-by');
 
 // Middleware
+app.use(morgan('dev'));
 app.use(cors());
 app.use(express.json());
 

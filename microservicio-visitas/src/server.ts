@@ -6,13 +6,9 @@ import { testConnection } from "./db/connection.js";
 
 const PORT = Number(process.env.PORT) || 3003;
 
-const bootstrap = async (): Promise<void> => {
-  await testConnection();
 
-  app.listen(PORT, () => {
-    console.log(`Microservicio de visitas corriendo en http://localhost:${PORT}`);
-    console.log(`Endpoints disponibles en http://localhost:${PORT}/visitas`);
-  });
-};
 
-bootstrap();
+app.listen(PORT, () => {
+  console.log(`Microservicio de visitas corriendo en http://localhost:${PORT}`);
+  console.log(`Endpoints disponibles en http://localhost:${PORT}/visitas`);
+});

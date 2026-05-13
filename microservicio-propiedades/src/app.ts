@@ -1,5 +1,4 @@
-import express from "express";
-
+import express, { Express, Request, Response } from 'express';
 import cors from "cors";
 
 import morgan from 'morgan'; 
@@ -14,5 +13,13 @@ app.use(morgan('dev'));
 app.use(express.json());
 
 app.use("/propiedades", propiedadesRoutes);
+
+// Ruta de prueba
+app.get('/health', (req: Request, res: Response) => {
+  res.json({
+    success: true,
+    message: 'Microservicio de propiedades - OK',
+  });
+});
 
 export default app;

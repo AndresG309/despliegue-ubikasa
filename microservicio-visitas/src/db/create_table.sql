@@ -3,7 +3,7 @@
 -- Microservicio de Visitas - Plataforma Ubikasa
 -- ================================================
 
-USE microservicio-visitas;
+USE microservicio_visitas;
 
 CREATE TABLE IF NOT EXISTS visitas (
   id              INT             NOT NULL AUTO_INCREMENT,

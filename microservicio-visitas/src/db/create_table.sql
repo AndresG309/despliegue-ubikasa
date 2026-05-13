@@ -8,8 +8,8 @@ USE microservicio-visitas;
 CREATE TABLE IF NOT EXISTS visitas (
   id              INT             NOT NULL AUTO_INCREMENT,
   propiedadId     INT             NOT NULL,
-  arrendadorId    INT             NOT NULL,
-  visitanteId     INT             NULL DEFAULT NULL,
+  arrendadorId    VARCHAR(36)     NOT NULL,
+  visitanteId     VARCHAR(36)     NULL DEFAULT NULL,
   fecha           DATE            NOT NULL,
   hora            TIME            NOT NULL,
   completada      BOOLEAN         NOT NULL DEFAULT FALSE,

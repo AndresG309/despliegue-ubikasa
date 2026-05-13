@@ -8,6 +8,9 @@ export interface Visita {
   completada: boolean;
   createdAt: Date;
   updatedAt: Date;
+  propiedadDetalles?: any;
+  arrendadorDetalles?: any;
+  visitanteDetalles?: any;
 }
 
 export interface CrearVisitaDTO {

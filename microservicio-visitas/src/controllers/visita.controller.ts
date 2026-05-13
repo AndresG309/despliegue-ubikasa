@@ -3,11 +3,28 @@ import * as VisitaModel from "../models/visita.model.js";
 import { sendSuccess, sendError } from "../utils/responseHelper.js";
 import { HttpError } from "../utils/httpError.js";
 import { isValidDate, isValidTime, isPositiveInteger } from "../utils/validators.js";
+import { getPropiedadById, getUsuarioById } from "../services/external.service.js";
+import { Visita } from "../interfaces/visita.interface.js";
+
+const enrichVisita = async (visita: Visita): Promise<Visita> => {
+  const propiedadDetalles = await getPropiedadById(visita.propiedadId);
+  const arrendadorDetalles = await getUsuarioById(visita.arrendadorId);
+  const visitanteDetalles = visita.visitanteId ? await getUsuarioById(visita.visitanteId) : null;
+
+  return {
+    ...visita,
+    propiedadDetalles,
+    arrendadorDetalles,
+    visitanteDetalles
+  };
+};
 
 export const getAll = async (_req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const visitas = await VisitaModel.findAll();
-    sendSuccess(res, 200, "Visitas obtenidas correctamente", visitas);
+    // Enriquecer todas las visitas con datos de otros microservicios de forma paralela
+    const visitasEnriquecidas = await Promise.all(visitas.map(enrichVisita));
+    sendSuccess(res, 200, "Visitas obtenidas correctamente", visitasEnriquecidas);
   } catch (error) {
     next(error);
   }
@@ -27,7 +44,10 @@ export const getById = async (req: Request, res: Response, next: NextFunction): 
       return;
     }
 
-    sendSuccess(res, 200, "Visita obtenida correctamente", visita);
+    // Enriquecer la visita específica
+    const visitaEnriquecida = await enrichVisita(visita);
+
+    sendSuccess(res, 200, "Visita obtenida correctamente", visitaEnriquecida);
   } catch (error) {
     next(error);
   }
@@ -163,6 +183,16 @@ export const agendar = async (req: Request, res: Response, next: NextFunction): 
 
     if (visita.visitanteId !== null) {
       sendError(res, 409, "La visita ya está reservada");
+      return;
+    }
+    const usuario = await getUsuarioById(Number(visitanteId));
+    if (!usuario) {
+      sendError(res, 404, "Usuario no encontrado");
+      return;
+    }
+    const propiedad = await getPropiedadById(Number(visita.propiedadId));
+    if (!propiedad) {
+      sendError(res, 404, "Propiedad no encontrada");
       return;
     }
 

@@ -215,16 +215,22 @@ function renderVisitas(visitas, container) {
           </div>
           <div class="visita-card__detail">
             <span class="visita-card__detail-label">🏠 Propiedad</span>
-            <span class="visita-card__detail-value">${v.propiedadId}</span>
+            <span class="visita-card__detail-value" title="ID: ${v.propiedadId}">
+              ${v.propiedadDetalles ? (v.propiedadDetalles.titulo || v.propiedadDetalles.nombre || 'Prop. ' + v.propiedadId) : 'ID: ' + v.propiedadId}
+            </span>
           </div>
           <div class="visita-card__detail">
             <span class="visita-card__detail-label">👤 Arrendador</span>
-            <span class="visita-card__detail-value">${v.arrendadorId}</span>
+            <span class="visita-card__detail-value" title="ID: ${v.arrendadorId}">
+              ${v.arrendadorDetalles ? (v.arrendadorDetalles.nombre || v.arrendadorDetalles.email || 'Arrendador ' + v.arrendadorId) : 'ID: ' + v.arrendadorId}
+            </span>
           </div>
           ${v.visitanteId !== null ? `
           <div class="visita-card__detail">
             <span class="visita-card__detail-label">🧑 Visitante</span>
-            <span class="visita-card__detail-value">${v.visitanteId}</span>
+            <span class="visita-card__detail-value" title="ID: ${v.visitanteId}">
+              ${v.visitanteDetalles ? (v.visitanteDetalles.nombre || v.visitanteDetalles.email || 'Visitante ' + v.visitanteId) : 'ID: ' + v.visitanteId}
+            </span>
           </div>` : ''}
         </div>
         <div class="visita-card__actions">

@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+  <meta charset="UTF-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <title>UbiKasa</title>
+
+  <link
+    rel="stylesheet"
+    href="styles.css"
+  />
+
+</head>
+
+<body>
+
+  <header class="header">
+
+    <div>
+
+      <h1>UbiKasa</h1>
+
+      <p>
+        Encuentra tu hogar ideal
+      </p>
+
+    </div>
+
+    <button id="btnAbrirModal">
+      + Crear publicación
+    </button>
+
+  </header>
+
+  <section class="buscador">
+
+    <input
+      type="text"
+      id="inputBusqueda"
+      placeholder="Buscar propiedades..."
+    />
+
+  </section>
+
+  <main
+    id="contenedor"
+    class="contenedor"
+  ></main>
+
+  <!-- MODAL CREAR -->
+
+  <div
+    id="modalCrear"
+    class="modal oculto"
+  >
+
+    <div class="modal-content">
+
+      <span
+        id="cerrarModalCrear"
+        class="cerrar"
+      >
+        ×
+      </span>
+
+      <h2>
+        Crear publicación
+      </h2>
+
+      <form id="formulario">
+
+        <input
+          type="text"
+          id="titulo"
+          placeholder="Título"
+          required
+        />
+
+        <textarea
+          id="descripcion"
+          placeholder="Descripción"
+          required
+        ></textarea>
+
+        <input
+          type="text"
+          id="direccion"
+          placeholder="Dirección"
+          required
+        />
+
+        <input
+          type="text"
+          id="multimedia"
+          placeholder="URL imagen"
+          required
+        />
+
+        <input
+          type="number"
+          id="arrendador_id"
+          placeholder="ID arrendador"
+          required
+        />
+
+        <input
+          type="number"
+          id="precio"
+          placeholder="Precio"
+          required
+        />
+
+        <button type="submit">
+          Guardar
+        </button>
+
+      </form>
+
+    </div>
+
+  </div>
+
+  <!-- MODAL DETALLE -->
+
+  <div
+    id="modalDetalle"
+    class="modal oculto"
+  >
+
+    <div class="modal-content detalle">
+
+      <span
+        id="cerrarDetalle"
+        class="cerrar"
+      >
+        ×
+      </span>
+
+      <img
+        id="detalleImagen"
+      />
+
+      <h2 id="detalleTitulo"></h2>
+
+      <p id="detalleDescripcion"></p>
+
+      <p>
+        <strong>Dirección:</strong>
+        <span id="detalleDireccion"></span>
+      </p>
+
+      <p>
+        <strong>Precio:</strong>
+        $
+        <span id="detallePrecio"></span>
+      </p>
+
+      <p>
+        <strong>Arrendador:</strong>
+        <span id="detalleArrendador"></span>
+      </p>
+
+      <div class="acciones">
+
+        <button
+          id="btnEditar"
+          class="btn-editar"
+        >
+          Editar publicación
+        </button>
+
+        <button
+          id="btnEliminar"
+          class="btn-eliminar"
+        >
+          Eliminar publicación
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- MODAL EDITAR -->
+
+  <div
+    id="modalEditar"
+    class="modal oculto"
+  >
+
+    <div class="modal-content">
+
+      <span
+        id="cerrarEditar"
+        class="cerrar"
+      >
+        ×
+      </span>
+
+      <h2>
+        Editar publicación
+      </h2>
+
+      <form id="formEditar">
+
+        <input
+          type="text"
+          id="editTitulo"
+          required
+        />
+
+        <textarea
+          id="editDescripcion"
+          required
+        ></textarea>
+
+        <input
+          type="text"
+          id="editDireccion"
+          required
+        />
+
+        <input
+          type="text"
+          id="editMultimedia"
+          required
+        />
+
+        <input
+          type="number"
+          id="editArrendador"
+          required
+        />
+
+        <input
+          type="number"
+          id="editPrecio"
+          required
+        />
+
+        <button type="submit">
+          Guardar cambios
+        </button>
+
+      </form>
+
+    </div>
+
+  </div>
+
+  <script src="app.js"></script>
+
+</body>
+
+</html>

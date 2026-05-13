@@ -4,11 +4,15 @@ import { fileURLToPath } from "url";
 import app from "./app.js";
 
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+
+const __sourcedirName = path.dirname(path.dirname( __filename));
 
 dotenv.config({
-  path: path.resolve(__dirname, ".env")
+  path: path.resolve(__sourcedirName, ".env"),
 });
+
+
+
 
 const variablesEntorno = {
   DB_HOST: process.env.DB_HOST,

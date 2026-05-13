@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS propiedades (
     descripcion TEXT NOT NULL,
     direccion VARCHAR(255) NOT NULL,
     multimedia TEXT,
-    arrendador_id INT NOT NULL,
+    arrendador_id VARCHAR(36),
     precio DECIMAL(10,2) NOT NULL,
     interacciones INT DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

@@ -1,3 +1,5 @@
+CREATE DATABASE IF NOT EXISTS ubikasa_usuarios;
+USE ubikasa_usuarios;
 -- Crear tabla de usuarios
 CREATE TABLE IF NOT EXISTS usuarios (
   id VARCHAR(36) PRIMARY KEY,

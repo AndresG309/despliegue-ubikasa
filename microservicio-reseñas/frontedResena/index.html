@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reseñas — Ubikasa</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <div class="nav-logo">Ubi<span>kasa</span> <span class="nav-sub">reseñas</span></div>
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="showPage('crear', this)">Crear reseña</button>
+    <button class="nav-tab" onclick="showPage('arrendador', this)">Arrendador</button>
+    <button class="nav-tab" onclick="showPage('arrendatario', this)">Arrendatario</button>
+  </div>
+</nav>
+
+<!-- ══════════════ PÁGINA: CREAR ══════════════ -->
+<div id="page-crear" class="page active">
+  <h1>Nueva reseña</h1>
+  <p class="page-desc">Registra la experiencia de un arrendatario sobre un arrendador.</p>
+
+  <div class="card">
+    <div class="form-grid">
+      <div class="form-group">
+        <label>ID Arrendatario *</label>
+        <input type="number" id="c-arrendatario" placeholder="Ej: 10" min="1" />
+      </div>
+      <div class="form-group">
+        <label>ID Arrendador *</label>
+        <input type="number" id="c-arrendador" placeholder="Ej: 5" min="1" />
+      </div>
+      <div class="form-group full">
+        <label>Calificación *</label>
+        <div class="star-selector">
+          <button class="star-btn" data-val="1" onclick="setStar(1)">★</button>
+          <button class="star-btn" data-val="2" onclick="setStar(2)">★</button>
+          <button class="star-btn" data-val="3" onclick="setStar(3)">★</button>
+          <button class="star-btn" data-val="4" onclick="setStar(4)">★</button>
+          <button class="star-btn" data-val="5" onclick="setStar(5)">★</button>
+          <span class="star-label" id="star-label">Selecciona una calificación</span>
+        </div>
+      </div>
+      <div class="form-group full">
+        <label>Comentario</label>
+        <textarea id="c-comentario" placeholder="Describe tu experiencia con este arrendador..."></textarea>
+      </div>
+    </div>
+    <div class="form-footer">
+      <button class="btn btn-primary" onclick="crearResena()">Publicar reseña</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ PÁGINA: ARRENDADOR ══════════════ -->
+<div id="page-arrendador" class="page">
+  <h1>Panel del arrendador</h1>
+  <p class="page-desc">Consulta el historial y resumen de calificaciones recibidas por un arrendador.</p>
+
+  <div class="filter-bar">
+    <input type="number" id="a-id" placeholder="ID del arrendador" min="1" />
+    <button class="btn btn-primary" onclick="buscarArrendador()">Buscar</button>
+  </div>
+
+  <div id="a-resumen" style="display:none; margin-bottom:1.5rem;">
+    <p class="section-title">Resumen de calificaciones</p>
+    <div class="card">
+      <div class="resumen-grid">
+        <div class="resumen-score">
+          <div class="score-big" id="a-promedio">—</div>
+          <div class="stars centered" id="a-stars-avg"></div>
+          <div class="score-sub" id="a-total-label">0 reseñas</div>
+        </div>
+        <div id="a-distribucion"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="a-lista">
+    <div class="state-msg"><span class="icon">👤</span>Ingresa el ID del arrendador para ver su historial.</div>
+  </div>
+</div>
+
+<!-- ══════════════ PÁGINA: ARRENDATARIO ══════════════ -->
+<div id="page-arrendatario" class="page">
+  <h1>Reseñas del arrendatario</h1>
+  <p class="page-desc">Consulta las reseñas que ha escrito un arrendatario.</p>
+
+  <div class="filter-bar">
+    <input type="number" id="t-id" placeholder="ID del arrendatario" min="1" />
+    <button class="btn btn-primary" onclick="buscarArrendatario()">Buscar</button>
+  </div>
+
+  <div id="t-lista">
+    <div class="state-msg"><span class="icon">✍️</span>Ingresa el ID del arrendatario para ver sus reseñas.</div>
+  </div>
+</div>
+
+<!-- ══════════════ MODAL EDITAR ══════════════ -->
+<div class="modal-overlay" id="modal-editar">
+  <div class="modal">
+    <h2>Editar reseña</h2>
+    <input type="hidden" id="edit-id" />
+    <div class="form-group" style="margin-bottom:1rem;">
+      <label>Calificación</label>
+      <div class="star-selector">
+        <button class="star-btn edit-star" data-val="1" onclick="setStarEdit(1)">★</button>
+        <button class="star-btn edit-star" data-val="2" onclick="setStarEdit(2)">★</button>
+        <button class="star-btn edit-star" data-val="3" onclick="setStarEdit(3)">★</button>
+        <button class="star-btn edit-star" data-val="4" onclick="setStarEdit(4)">★</button>
+        <button class="star-btn edit-star" data-val="5" onclick="setStarEdit(5)">★</button>
+        <span class="star-label" id="edit-star-label"></span>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Comentario</label>
+      <textarea id="edit-comentario" rows="4"></textarea>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="cerrarModal()">Cancelar</button>
+      <button class="btn btn-primary" onclick="guardarEdicion()">Guardar cambios</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script src="script.js"></script>
+</body>
+</html>

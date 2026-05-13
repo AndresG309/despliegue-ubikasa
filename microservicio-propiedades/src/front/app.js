@@ -26,6 +26,11 @@ const modalDetalle =
     "modalDetalle"
   );
 
+const modalEditar =
+  document.getElementById(
+    "modalEditar"
+  );
+
 let propiedadActual = null;
 
 /* OBTENER */
@@ -101,7 +106,7 @@ function abrirDetalle(
 ) {
 
   propiedadActual =
-    propiedad.id;
+    propiedad;
 
   document.getElementById(
     "detalleImagen"
@@ -129,11 +134,6 @@ function abrirDetalle(
     propiedad.precio;
 
   document.getElementById(
-    "detalleTiempo"
-  ).textContent =
-    propiedad.tiempo_visita;
-
-  document.getElementById(
     "detalleArrendador"
   ).textContent =
     propiedad.arrendador_id;
@@ -151,48 +151,42 @@ formulario.addEventListener(
 
     e.preventDefault();
 
-    const nueva =
-      {
+    const nueva = {
 
-        titulo:
+      titulo:
+        document.getElementById(
+          "titulo"
+        ).value,
+
+      descripcion:
+        document.getElementById(
+          "descripcion"
+        ).value,
+
+      direccion:
+        document.getElementById(
+          "direccion"
+        ).value,
+
+      multimedia:
+        document.getElementById(
+          "multimedia"
+        ).value,
+
+      arrendador_id:
+        Number(
           document.getElementById(
-            "titulo"
-          ).value,
+            "arrendador_id"
+          ).value
+        ),
 
-        descripcion:
+      precio:
+        Number(
           document.getElementById(
-            "descripcion"
-          ).value,
-
-        direccion:
-          document.getElementById(
-            "direccion"
-          ).value,
-
-        multimedia:
-          document.getElementById(
-            "multimedia"
-          ).value,
-
-        arrendador_id:
-          Number(
-            document.getElementById(
-              "arrendador_id"
-            ).value
-          ),
-
-        precio:
-          Number(
-            document.getElementById(
-              "precio"
-            ).value
-          ),
-
-        tiempo_visita:
-          document.getElementById(
-            "tiempo_visita"
-          ).value,
-      };
+            "precio"
+          ).value
+        ),
+    };
 
     await fetch(API, {
 
@@ -218,6 +212,133 @@ formulario.addEventListener(
   }
 );
 
+/* EDITAR */
+
+document
+  .getElementById(
+    "btnEditar"
+  )
+  .addEventListener(
+    "click",
+    () => {
+
+      if (!propiedadActual) return;
+
+      document.getElementById(
+        "editTitulo"
+      ).value =
+        propiedadActual.titulo;
+
+      document.getElementById(
+        "editDescripcion"
+      ).value =
+        propiedadActual.descripcion;
+
+      document.getElementById(
+        "editDireccion"
+      ).value =
+        propiedadActual.direccion;
+
+      document.getElementById(
+        "editMultimedia"
+      ).value =
+        propiedadActual.multimedia;
+
+      document.getElementById(
+        "editArrendador"
+      ).value =
+        propiedadActual.arrendador_id;
+
+      document.getElementById(
+        "editPrecio"
+      ).value =
+        propiedadActual.precio;
+
+      modalDetalle.classList.add(
+        "oculto"
+      );
+
+      modalEditar.classList.remove(
+        "oculto"
+      );
+    }
+  );
+
+document
+  .getElementById(
+    "formEditar"
+  )
+  .addEventListener(
+    "submit",
+    async (e) => {
+
+      e.preventDefault();
+
+      const actualizada = {
+
+        titulo:
+          document.getElementById(
+            "editTitulo"
+          ).value,
+
+        descripcion:
+          document.getElementById(
+            "editDescripcion"
+          ).value,
+
+        direccion:
+          document.getElementById(
+            "editDireccion"
+          ).value,
+
+        multimedia:
+          document.getElementById(
+            "editMultimedia"
+          ).value,
+
+        arrendador_id:
+          Number(
+            document.getElementById(
+              "editArrendador"
+            ).value
+          ),
+
+        precio:
+          Number(
+            document.getElementById(
+              "editPrecio"
+            ).value
+          ),
+      };
+
+      await fetch(
+        `${API}/${propiedadActual.id}`,
+        {
+
+          method: "PATCH",
+
+          headers: {
+            "Content-Type":
+              "application/json",
+          },
+
+          body:
+            JSON.stringify(
+              actualizada
+            ),
+        }
+      );
+
+      document.getElementById(
+        "modalEditar"
+      ).classList.add(
+        "oculto"
+      );
+
+      obtenerPropiedades();
+    }
+  );
+
 /* ELIMINAR */
 
 document
@@ -233,7 +354,7 @@ document
       ) return;
 
       await fetch(
-        `${API}/${propiedadActual}`,
+        `${API}/${propiedadActual.id}`,
         {
           method:
             "DELETE",
@@ -314,6 +435,20 @@ document
     () => {
 
       modalDetalle.classList.add(
+        "oculto"
+      );
+    }
+  );
+
+document
+  .getElementById(
+    "cerrarEditar"
+  )
+  .addEventListener(
+    "click",
+    () => {
+
+      modalEditar.classList.add(
         "oculto"
       );
     }

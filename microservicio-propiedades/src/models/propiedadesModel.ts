@@ -27,8 +27,7 @@ export const create = async (
   direccion: string,
   multimedia: string,
   arrendador_id: number,
-  precio: number,
-  tiempo_visita: string
+  precio: number
 ) => {
   await pool.query(
     `
@@ -39,11 +38,10 @@ export const create = async (
       direccion,
       multimedia,
       arrendador_id,
-      precio,
-      tiempo_visita
+      precio
     )
 
-    VALUES (?, ?, ?, ?, ?, ?, ?)
+    VALUES (?, ?, ?, ?, ?, ?)
     `,
     [
       titulo,
@@ -52,7 +50,6 @@ export const create = async (
       multimedia,
       arrendador_id,
       precio,
-      tiempo_visita,
     ]
   );
 };

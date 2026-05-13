@@ -38,7 +38,6 @@ export const create = async (
     multimedia,
     arrendador_id,
     precio,
-    tiempo_visita,
   } = req.body;
 
   await PropiedadModel.create(
@@ -47,8 +46,7 @@ export const create = async (
     direccion,
     multimedia,
     arrendador_id,
-    precio,
-    tiempo_visita
+    precio
   );
 
   res.json({

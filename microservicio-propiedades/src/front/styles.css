@@ -438,3 +438,21 @@ body {
     font-size: 30px;
   }
 }
+.acciones {
+
+  display: flex;
+
+  gap: 15px;
+
+  margin-top: 20px;
+}
+
+.btn-editar {
+
+  background: #8e24aa !important;
+}
+
+.btn-editar:hover {
+
+  background: #6a1b9a !important;
+}

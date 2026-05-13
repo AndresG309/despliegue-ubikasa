@@ -117,13 +117,6 @@
           required
         />
 
-        <input
-          type="text"
-          id="tiempo_visita"
-          placeholder="Tiempo visita"
-          required
-        />
-
         <button type="submit">
           Guardar
         </button>
@@ -170,21 +163,94 @@
       </p>
 
       <p>
-        <strong>Tiempo visita:</strong>
-        <span id="detalleTiempo"></span>
-      </p>
-
-      <p>
         <strong>Arrendador:</strong>
         <span id="detalleArrendador"></span>
       </p>
 
-      <button
-        id="btnEliminar"
-        class="btn-eliminar"
+      <div class="acciones">
+
+        <button
+          id="btnEditar"
+          class="btn-editar"
+        >
+          Editar publicación
+        </button>
+
+        <button
+          id="btnEliminar"
+          class="btn-eliminar"
+        >
+          Eliminar publicación
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- MODAL EDITAR -->
+
+  <div
+    id="modalEditar"
+    class="modal oculto"
+  >
+
+    <div class="modal-content">
+
+      <span
+        id="cerrarEditar"
+        class="cerrar"
       >
-        Eliminar publicación
-      </button>
+        ×
+      </span>
+
+      <h2>
+        Editar publicación
+      </h2>
+
+      <form id="formEditar">
+
+        <input
+          type="text"
+          id="editTitulo"
+          required
+        />
+
+        <textarea
+          id="editDescripcion"
+          required
+        ></textarea>
+
+        <input
+          type="text"
+          id="editDireccion"
+          required
+        />
+
+        <input
+          type="text"
+          id="editMultimedia"
+          required
+        />
+
+        <input
+          type="number"
+          id="editArrendador"
+          required
+        />
+
+        <input
+          type="number"
+          id="editPrecio"
+          required
+        />
+
+        <button type="submit">
+          Guardar cambios
+        </button>
+
+      </form>
 
     </div>
 

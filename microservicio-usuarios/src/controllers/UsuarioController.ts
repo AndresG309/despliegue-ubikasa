@@ -1,6 +1,6 @@
-import { Request, Response } from 'express';
-import UsuarioModel from '../models/UsuarioModel.js';
-import { Usuario } from '../interfaces/Usuario.js';
+import { Request, Response } from "express";
+import UsuarioModel from "../models/UsuarioModel.js";
+import { Usuario } from "../interfaces/Usuario.js";
 
 export const getUsuarioById = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -10,7 +10,7 @@ export const getUsuarioById = async (req: Request, res: Response): Promise<void>
     if (!usuario) {
       res.status(404).json({
         success: false,
-        message: 'Usuario no encontrado',
+        message: "Usuario no encontrado",
       });
       return;
     }
@@ -18,26 +18,35 @@ export const getUsuarioById = async (req: Request, res: Response): Promise<void>
     res.json({
       success: true,
       data: usuario,
-      message: 'Usuario obtenido correctamente',
+      message: "Usuario obtenido correctamente",
     });
   } catch (error) {
     res.status(500).json({
       success: false,
-      message: 'Error al obtener usuario',
-      error: error instanceof Error ? error.message : 'Error desconocido',
+      message: "Error al obtener usuario",
+      error: error instanceof Error ? error.message : "Error desconocido",
     });
   }
 };
 
 export const createUsuario = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { nombre_completo, correo_electronico, contrasena, cedula, numero_celular, foto_perfil, enlace_whatsapp } = req.body;
+    const {
+      nombre_completo,
+      correo_electronico,
+      contrasena,
+      cedula,
+      numero_celular,
+      foto_perfil,
+      enlace_whatsapp,
+    } = req.body;
 
     // Validaciones
     if (!nombre_completo || !correo_electronico || !contrasena || !cedula || !numero_celular) {
       res.status(400).json({
         success: false,
-        message: 'Los campos nombre_completo, correo_electronico, contrasena, cedula y numero_celular son requeridos',
+        message:
+          "Los campos nombre_completo, correo_electronico, contrasena, cedula y numero_celular son requeridos",
       });
       return;
     }
@@ -47,7 +56,7 @@ export const createUsuario = async (req: Request, res: Response): Promise<void> 
     if (emailExists) {
       res.status(400).json({
         success: false,
-        message: 'El correo electrónico ya está registrado',
+        message: "El correo electrónico ya está registrado",
       });
       return;
     }
@@ -57,7 +66,7 @@ export const createUsuario = async (req: Request, res: Response): Promise<void> 
     if (cedulaExists) {
       res.status(400).json({
         success: false,
-        message: 'La cédula ya está registrada',
+        message: "La cédula ya está registrada",
       });
       return;
     }
@@ -77,13 +86,13 @@ export const createUsuario = async (req: Request, res: Response): Promise<void> 
     res.status(201).json({
       success: true,
       data: { id: usuarioId },
-      message: 'Usuario creado correctamente',
+      message: "Usuario creado correctamente",
     });
   } catch (error) {
     res.status(500).json({
       success: false,
-      message: 'Error al crear usuario',
-      error: error instanceof Error ? error.message : 'Error desconocido',
+      message: "Error al crear usuario",
+      error: error instanceof Error ? error.message : "Error desconocido",
     });
   }
 };
@@ -98,7 +107,7 @@ export const updateUsuario = async (req: Request, res: Response): Promise<void> 
     if (!usuario) {
       res.status(404).json({
         success: false,
-        message: 'Usuario no encontrado',
+        message: "Usuario no encontrado",
       });
       return;
     }
@@ -109,7 +118,7 @@ export const updateUsuario = async (req: Request, res: Response): Promise<void> 
       if (emailExists) {
         res.status(400).json({
           success: false,
-          message: 'El correo electrónico ya está registrado',
+          message: "El correo electrónico ya está registrado",
         });
         return;
       }
@@ -128,20 +137,20 @@ export const updateUsuario = async (req: Request, res: Response): Promise<void> 
     if (!updated) {
       res.status(400).json({
         success: false,
-        message: 'No hay campos para actualizar',
+        message: "No hay campos para actualizar",
       });
       return;
     }
 
     res.json({
       success: true,
-      message: 'Usuario actualizado correctamente',
+      message: "Usuario actualizado correctamente",
     });
   } catch (error) {
     res.status(500).json({
       success: false,
-      message: 'Error al actualizar usuario',
-      error: error instanceof Error ? error.message : 'Error desconocido',
+      message: "Error al actualizar usuario",
+      error: error instanceof Error ? error.message : "Error desconocido",
     });
   }
 };
@@ -155,7 +164,7 @@ export const deleteUsuario = async (req: Request, res: Response): Promise<void> 
     if (!usuario) {
       res.status(404).json({
         success: false,
-        message: 'Usuario no encontrado',
+        message: "Usuario no encontrado",
       });
       return;
     }
@@ -165,20 +174,20 @@ export const deleteUsuario = async (req: Request, res: Response): Promise<void> 
     if (!deleted) {
       res.status(400).json({
         success: false,
-        message: 'No se pudo eliminar el usuario',
+        message: "No se pudo eliminar el usuario",
       });
       return;
     }
 
     res.json({
       success: true,
-      message: 'Usuario eliminado correctamente',
+      message: "Usuario eliminado correctamente",
     });
   } catch (error) {
     res.status(500).json({
       success: false,
-      message: 'Error al eliminar usuario',
-      error: error instanceof Error ? error.message : 'Error desconocido',
+      message: "Error al eliminar usuario",
+      error: error instanceof Error ? error.message : "Error desconocido",
     });
   }
 };
@@ -191,7 +200,7 @@ export const loginUsuario = async (req: Request, res: Response): Promise<void> =
     if (!correo_electronico || !contrasena) {
       res.status(400).json({
         success: false,
-        message: 'Correo electrónico y contraseña son requeridos',
+        message: "Correo electrónico y contraseña son requeridos",
       });
       return;
     }
@@ -201,7 +210,7 @@ export const loginUsuario = async (req: Request, res: Response): Promise<void> =
     if (!usuario) {
       res.status(401).json({
         success: false,
-        message: 'Correo o contraseña incorrectos',
+        message: "Correo o contraseña incorrectos",
       });
       return;
     }
@@ -211,7 +220,7 @@ export const loginUsuario = async (req: Request, res: Response): Promise<void> =
     if (!passwordValid) {
       res.status(401).json({
         success: false,
-        message: 'Correo o contraseña incorrectos',
+        message: "Correo o contraseña incorrectos",
       });
       return;
     }
@@ -224,13 +233,13 @@ export const loginUsuario = async (req: Request, res: Response): Promise<void> =
         correo_electronico: usuario.correo_electronico,
         foto_perfil: usuario.foto_perfil,
       },
-      message: 'Login exitoso',
+      message: "Login exitoso",
     });
   } catch (error) {
     res.status(500).json({
       success: false,
-      message: 'Error al hacer login',
-      error: error instanceof Error ? error.message : 'Error desconocido',
+      message: "Error al hacer login",
+      error: error instanceof Error ? error.message : "Error desconocido",
     });
   }
 };

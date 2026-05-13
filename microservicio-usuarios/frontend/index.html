@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ubikasa - Microservicio de Usuarios</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>🔐 Ubikasa - Usuarios API</h1>
+
+      <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('health')">Health Check</button>
+        <button class="tab-btn" onclick="switchTab('crear')">Crear Usuario</button>
+        <button class="tab-btn" onclick="switchTab('obtener')">Obtener Usuario</button>
+        <button class="tab-btn" onclick="switchTab('actualizar')">Actualizar</button>
+        <button class="tab-btn" onclick="switchTab('login')">Login</button>
+        <button class="tab-btn" onclick="switchTab('eliminar')">Eliminar</button>
+      </div>
+
+      <div class="content">
+        <!-- HEALTH CHECK -->
+        <div id="health" class="tab-content active">
+          <div class="form-section">
+            <h2>Health Check</h2>
+            <form onsubmit="healthCheck(event)">
+              <div class="form-group" style="color: #666; margin-bottom: 20px">
+                Verifica el estado del microservicio
+              </div>
+              <button type="submit">Verificar Estado</button>
+            </form>
+          </div>
+        </div>
+        <!-- CREAR USUARIO -->
+        <div id="crear" class="tab-content">
+          <div class="form-section">
+            <h2>Crear Nuevo Usuario</h2>
+            <form onsubmit="crearUsuario(event)">
+              <div class="form-group">
+                <label for="crear-nombre">Nombre Completo *</label>
+                <input type="text" id="crear-nombre" required />
+              </div>
+              <div class="form-group">
+                <label for="crear-email">Email *</label>
+                <input type="email" id="crear-email" required />
+              </div>
+              <div class="form-group">
+                <label for="crear-contrasena">Contraseña *</label>
+                <input type="password" id="crear-contrasena" required />
+                <div class="helper-text">Min 8 caracteres</div>
+              </div>
+              <div class="form-group-inline">
+                <div class="form-group">
+                  <label for="crear-cedula">Cédula *</label>
+                  <input type="text" id="crear-cedula" required />
+                </div>
+                <div class="form-group">
+                  <label for="crear-celular">Celular *</label>
+                  <input type="text" id="crear-celular" required />
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="crear-foto">Foto Perfil (URL)</label>
+                <input type="url" id="crear-foto" />
+              </div>
+              <div class="form-group">
+                <label for="crear-whatsapp">WhatsApp</label>
+                <input type="text" id="crear-whatsapp" />
+              </div>
+              <button type="submit">Crear Usuario</button>
+            </form>
+          </div>
+        </div>
+
+        <!-- OBTENER USUARIO -->
+        <div id="obtener" class="tab-content">
+          <div class="form-section">
+            <h2>Obtener Usuario</h2>
+            <form onsubmit="obtenerUsuario(event)">
+              <div class="form-group">
+                <label for="obtener-id">ID (UUID) *</label>
+                <input
+                  type="text"
+                  id="obtener-id"
+                  placeholder="ej: 550e8400-e29b-41d4-a716-446655440000"
+                  required
+                />
+              </div>
+              <button type="submit">Obtener Usuario</button>
+            </form>
+          </div>
+        </div>
+
+        <!-- ACTUALIZAR USUARIO -->
+        <div id="actualizar" class="tab-content">
+          <div class="form-section">
+            <h2>Actualizar Usuario</h2>
+            <form onsubmit="actualizarUsuario(event)">
+              <div class="form-group">
+                <label for="actualizar-id">ID del Usuario *</label>
+                <input type="text" id="actualizar-id" placeholder="UUID" required />
+              </div>
+              <div class="form-group">
+                <label for="actualizar-nombre">Nombre Completo</label>
+                <input type="text" id="actualizar-nombre" />
+              </div>
+              <div class="form-group">
+                <label for="actualizar-celular">Celular</label>
+                <input type="text" id="actualizar-celular" />
+              </div>
+              <div class="form-group">
+                <label for="actualizar-foto">Foto Perfil (URL)</label>
+                <input type="url" id="actualizar-foto" />
+              </div>
+              <div class="form-group">
+                <label for="actualizar-whatsapp">WhatsApp</label>
+                <input type="text" id="actualizar-whatsapp" />
+              </div>
+              <div class="form-group">
+                <label for="actualizar-contrasena">Nueva Contraseña</label>
+                <input type="password" id="actualizar-contrasena" />
+              </div>
+              <button type="submit">Actualizar Usuario</button>
+            </form>
+          </div>
+        </div>
+
+        <!-- LOGIN -->
+        <div id="login" class="tab-content">
+          <div class="form-section">
+            <h2>Login de Usuario</h2>
+            <form onsubmit="loginUsuario(event)">
+              <div class="form-group">
+                <label for="login-email">Email *</label>
+                <input type="email" id="login-email" required />
+              </div>
+              <div class="form-group">
+                <label for="login-contrasena">Contraseña *</label>
+                <input type="password" id="login-contrasena" required />
+              </div>
+              <button type="submit">Iniciar Sesión</button>
+            </form>
+          </div>
+        </div>
+
+        <!-- ELIMINAR USUARIO -->
+        <div id="eliminar" class="tab-content">
+          <div class="form-section">
+            <h2>Eliminar Usuario</h2>
+            <form onsubmit="eliminarUsuario(event)">
+              <div class="form-group">
+                <label for="eliminar-id">ID del Usuario *</label>
+                <input type="text" id="eliminar-id" placeholder="UUID" required />
+              </div>
+              <div style="color: #dc3545; font-weight: 600; margin-bottom: 15px">
+                ⚠️ Esta acción es irreversible
+              </div>
+              <button type="submit" style="background: #dc3545">Eliminar Usuario</button>
+            </form>
+          </div>
+        </div>
+
+        <!-- RESPUESTA -->
+        <div class="response-section">
+          <h2>Respuesta</h2>
+          <div id="response">Aquí aparecerán las respuestas del servidor...</div>
+          <button class="clear-btn" onclick="limpiarRespuesta()">Limpiar</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="./script.js"></script>
+  </body>
+</html>

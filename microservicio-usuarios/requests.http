@@ -1,0 +1,93 @@
+###############################################
+### 1. HEALTH CHECK
+###############################################
+GET http://localhost:3001/health
+
+###############################################
+### 2. CREAR USUARIO
+###############################################
+POST http://localhost:3001/usuarios
+Content-Type: application/json
+
+{
+  "nombre_completo": "Juan Pérez",
+  "correo_electronico": "juan@example.com",
+  "contrasena": "MiContraseña123!",
+  "cedula": "12345678",
+  "numero_celular": "3001234567",
+  "foto_perfil": "https://example.com/foto.jpg",
+  "enlace_whatsapp": "https://wa.me/573001234567"
+}
+
+###############################################
+### 3. CREAR SEGUNDO USUARIO
+###############################################
+POST http://localhost:3001/usuarios
+Content-Type: application/json
+
+{
+  "nombre_completo": "María García",
+  "correo_electronico": "maria@example.com",
+  "contrasena": "OtraContraseña456!",
+  "cedula": "87654321",
+  "numero_celular": "3009876543"
+}
+
+###############################################
+### 4. OBTENER USUARIO POR ID
+###############################################
+GET http://localhost:3001/usuarios/3cf816f8-fc42-4b8e-86e7-55533b07f989
+
+###############################################
+### 5. ACTUALIZAR USUARIO
+###############################################
+PUT http://localhost:3001/usuarios/3cf816f8-fc42-4b8e-86e7-55533b07f989
+Content-Type: application/json
+
+{
+  "nombre_completo": "Juan Carlos Pérez",
+  "numero_celular": "3005555555",
+  "foto_perfil": "https://example.com/nueva-foto.jpg"
+}
+
+###############################################
+### 6. ACTUALIZAR CONTRASEÑA
+###############################################
+PUT http://localhost:3001/usuarios/3cf816f8-fc42-4b8e-86e7-55533b07f989
+Content-Type: application/json
+
+{
+  "contrasena": "NuevaContraseña789!"
+}
+
+###############################################
+### 7. LOGIN USUARIO
+###############################################
+POST http://localhost:3001/usuarios/auth/login
+Content-Type: application/json
+
+{
+  "correo_electronico": "juan@example.com",
+  "contrasena": "MiContraseña123!"
+}
+
+###############################################
+### 8. LOGIN USUARIO (Credenciales incorrectas)
+###############################################
+POST http://localhost:3001/usuarios/auth/login
+Content-Type: application/json
+
+{
+  "correo_electronico": "juan@example.com",
+  "contrasena": "ContraseñaIncorrecta"
+}
+
+###############################################
+### 9. ELIMINAR USUARIO
+###############################################
+DELETE http://localhost:3001/usuarios/3cf816f8-fc42-4b8e-86e7-55533b07f989
+
+###############################################
+### 10. INTENTAR OBTENER USUARIO ELIMINADO
+###############################################
+GET http://localhost:3001/usuarios/3cf816f8-fc42-4b8e-86e7-55533b07f989

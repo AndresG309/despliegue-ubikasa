@@ -53,37 +53,12 @@ function starsHTML(n) {
   return h + '</div>';
 }
 
-//Validar que el usuario exista antes de permitir crear reseñas
-async function validarUsuarioExiste() {
-  try {
-    const res = await fetch(`${BASE}/usuarios/${USUARIO}`);
-
-    // Si el servidor responde 404 o cualquier otro error
-    if (!res.ok) {
-      return false;
-    }
-
-    const usuario = await res.json();
-
-    // Verificar que realmente exista un objeto con información
-    return usuario && usuario.id;
-  } catch (error) {
-    console.error('Error validando usuario:', error);
-    return false;
-  }
-}
 
 // ── CREAR RESEÑA ─────────────────────────────────────────────
 async function crearResena() {
   const arrendatario_id = parseInt(document.getElementById('c-arrendatario').value);
   const arrendador_id   = parseInt(document.getElementById('c-arrendador').value);
   const comentario      = document.getElementById('c-comentario').value.trim();
-  // Validar que el usuario exista antes de crear la reseña
-  const usuarioExiste = await validarUsuarioExiste();
-  if (!usuarioExiste) {
-    toast('El usuario no existe o no se pudo validar.', 'error');
-    return;
-  }
 
   if (!arrendatario_id || !arrendador_id) {
     toast('Completa los campos de ID arrendatario e ID arrendador.', 'error');

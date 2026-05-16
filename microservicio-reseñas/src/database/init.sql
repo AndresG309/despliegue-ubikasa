@@ -2,8 +2,9 @@
 -- Microservicio de Reseñas - Ubikasa
 -- Reseñas de arrendatario → arrendador
 -- ============================================================
+CREATE DATABASE IF NOT EXISTS microservicio_resenas;
  
-USE `microservicio-reseñas`;
+USE `microservicio_resenas`;
  
 DROP TABLE IF EXISTS resenas;
  

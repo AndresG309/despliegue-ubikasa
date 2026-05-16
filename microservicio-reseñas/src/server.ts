@@ -21,7 +21,7 @@ const variablesEntorno = {
 }
 console.log("Variables de entorno cargadas:", variablesEntorno);
 
-const PORT = process.env.PORT || 3003;
+const PORT = process.env.PORT || 3004;
 
 async function main() {
   // Verificar conexión a MySQL antes de levantar el servidor
